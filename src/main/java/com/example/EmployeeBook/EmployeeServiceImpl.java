@@ -4,36 +4,32 @@ import com.example.EmployeeBook.Exceptions.EmployeeAlreadyAddedException;
 import com.example.EmployeeBook.Exceptions.EmployeeNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private final List<Employee> employeeBook;
+    private final Map<String, Employee> employeeBook;
 
     public EmployeeServiceImpl() {
-        this.employeeBook = new ArrayList<>();
+        this.employeeBook = new HashMap<>();
     }
 
     @Override
     public Employee addEmployee(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
-        if (employeeBook.contains(employee)) {
+        if (employeeBook.containsKey(employee.getFullName())) {
             throw new EmployeeAlreadyAddedException();
         }
-        employeeBook.add(employee);
+        employeeBook.put(employee.getFullName(), employee);
         return employee;
     }
 
     @Override
     public Employee removeEmployee(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
-        if (employeeBook.contains(employee)) {
-            employeeBook.remove(employee);
-            return employee;
+        if (employeeBook.containsKey(employee.getFullName())) {
+            return employeeBook.remove(employee.getFullName());
         }
         throw new EmployeeNotFoundException();
     }
@@ -41,14 +37,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee findEmployee(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
-        if (employeeBook.contains(employee)) {
-            return employee;
+        if (employeeBook.containsKey(employee.getFullName())) {
+            return employeeBook.get(employee.getFullName());
         }
         throw new EmployeeNotFoundException();
     }
 
+
     @Override
-    public Collection<Employee> findeAll() {
-        return Collections.unmodifiableList(employeeBook);
+    public Collection<Employee> findAll() { return Collections.unmodifiableCollection(employeeBook.values());
     }
 }

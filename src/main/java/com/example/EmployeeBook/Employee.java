@@ -1,29 +1,21 @@
 package com.example.EmployeeBook;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Employee {
     private String firstName;
-    private String surName;
+    private String lastName;
 
 
-    public Employee(String firstName, String surName) {
+
+    public Employee(String firstName, String lastName) {
         this.firstName = firstName;
-        this.surName = surName;
+        this.lastName = lastName;
     }
-    public List<Employee> employeeBook = List.of(
-            new Employee("Dmitrii", "Beliaev"),
-            new Employee("Alexandr", "Rubanov"),
-            new Employee("Pavel", "Bazhura"),
-            new Employee("Vladislav", "Antonov"),
-            new Employee("Viktoria", "Kaneva"),
-            new Employee("Ekaterina", "Matveeva"),
-            new Employee("Svetlana", "Shirokova"),
-            new Employee("Elena", "Seitz"),
-            new Employee("Tatiana", "Urisman"),
-            new Employee("Natalia", "Zernova")
-    );
+
     public String getFirstName() {
         return firstName;
     }
@@ -33,11 +25,15 @@ public class Employee {
     }
 
     public String getSurName() {
-        return surName;
+        return lastName;
     }
 
     public void setSurName(String surName) {
-        this.surName = surName;
+        this.lastName = surName;
+    }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 
     @Override
@@ -45,16 +41,16 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return Objects.equals(firstName, employee.firstName) && Objects.equals(surName, employee.surName);
+        return Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, surName);
+        return Objects.hash(firstName, lastName);
     }
 
     @Override
     public String toString() {
-        return " Ф.И.О: " + firstName + " " + surName;
+        return "Имя: " + firstName + ". Фамилия: " + lastName;
     }
 }

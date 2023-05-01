@@ -1,15 +1,9 @@
 package com.example.EmployeeBook;
 
-import com.example.EmployeeBook.Exceptions.EmployeeAlreadyAddedException;
-import com.example.EmployeeBook.Exceptions.EmployeeNotFoundException;
-import com.example.EmployeeBook.Exceptions.EmployeeStorageIsFullException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Collection;
-import java.util.Collections;
 
 @RestController
 @RequestMapping("/employee")
@@ -36,7 +30,9 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public Collection<Employee> findAll (){
-        return service.findeAll();
+    public String findAll (){
+        return service.findAll().toString();
     }
+
+
 }
