@@ -2,17 +2,14 @@ package com.example.EmployeeBook.controllers;
 
 import com.example.EmployeeBook.model.Employee;
 import com.example.EmployeeBook.service.DepartmentService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
 
 @RestController
-@RequestMapping("/departments")
+@RequestMapping("/department")
 public class DepartmentController {
     private final DepartmentService departmentService;
 
@@ -20,17 +17,26 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
-    @GetMapping("/max-salary")
-    public Employee getEmployeeWithMaxSalary(@RequestParam("departmentId") Integer departmentId) {
+    @GetMapping("/{id}/employees")
+    public Map<Integer, List<Employee>> getAllEmployeesByDepartment (@PathVariable("id") Integer departmentId) {
+        return departmentService.getAllEmployeesByDepartment(departmentId);
+    }
+
+    @GetMapping("/{id}/salary/sum")
+    public Integer getSumSalary(@PathVariable("id") Integer departmentId) {
+        return departmentService.getSumSalary(departmentId);
+    }
+    @GetMapping("/{id}/salary/max")
+    public Employee getEmployeeWithMaxSalary(@PathVariable("id") Integer departmentId) {
         return departmentService.getEmployeeWithMaxSalary(departmentId);
     }
 
-    @GetMapping("/min-salary")
-    public Employee getEmployeeWithMinSalary(@RequestParam("departmentId") Integer departmentId) {
+    @GetMapping("/{id}/salary/min")
+    public Employee getEmployeeWithMinSalary(@PathVariable ("id") Integer departmentId) {
         return departmentService.getEmployeeWithMinSalary(departmentId);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/employees")
     public Map<Integer, List<Employee>> getGroupedByDepartmentEmployees(@RequestParam(name = "departmentId", required = false) Integer departmentId) {
         return departmentService.getGroupedByDepartmentEmployees(departmentId);
     }
