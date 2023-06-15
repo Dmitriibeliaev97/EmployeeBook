@@ -2,7 +2,6 @@ package com.example.EmployeeBook.service;
 
 import com.example.EmployeeBook.model.Employee;
 
-import java.util.Collection;
 import java.util.Map;
 
 public interface EmployeeService {
